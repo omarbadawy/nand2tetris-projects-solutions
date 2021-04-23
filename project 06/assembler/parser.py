@@ -10,40 +10,34 @@ class Parser:
         else:
             return "C_instruction"
 
-    def getDest(self, ins):
-        if self.instructionType(ins) == "C_instruction":
-            ind = ins.find("=")
+    def symbol(self, ins):
+        return ins[1:]
 
-            if ind != -1:
-                return ins[:ind]
-            else:
-                return "null"
+    def getDest(self, ins):
+        ind = ins.find("=")
+
+        if ind != -1:
+            return ins[:ind]
         else:
-            raise ValueError("Invalid instruction type")
+            return "null"
 
     def getComp(self, ins):
-        if self.instructionType(ins) == "C_instruction":
-            ind1 = ins.find("=")
-            ind2 = ins.find(";")
+        ind1 = ins.find("=")
+        ind2 = ins.find(";")
 
-            if ind1 != -1 and ind2 != -1:
-                return ins[ind1 + 1 : ind2]
-            elif ind1 != -1 and ind2 == -1:
-                return ins[ind1 + 1 :]
-            elif ind1 == -1 and ind2 != -1:
-                return ins[:ind2]
-            elif ind1 == -1 and ind2 == -1:
-                return ins
-        else:
-            raise ValueError("Invalid instruction type")
+        if ind1 != -1 and ind2 != -1:
+            return ins[ind1 + 1 : ind2]
+        elif ind1 != -1 and ind2 == -1:
+            return ins[ind1 + 1 :]
+        elif ind1 == -1 and ind2 != -1:
+            return ins[:ind2]
+        elif ind1 == -1 and ind2 == -1:
+            return ins
 
     def getJump(self, ins):
-        if self.instructionType(ins) == "C_instruction":
-            ind = ins.find(";")
+        ind = ins.find(";")
 
-            if ind != -1:
-                return ins[ind + 1 :]
-            else:
-                return "null"
+        if ind != -1:
+            return ins[ind + 1 :]
         else:
-            raise ValueError("Invalid instruction type")
+            return "null"
